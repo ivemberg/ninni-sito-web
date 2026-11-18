@@ -194,6 +194,31 @@ footer a, .modo a, .indirizzo a { text-underline-offset: 3px; }
 .modo a { font-weight: 600; color: var(--ink); }
 .come .piccolo { font-size: 13.5px; color: var(--ink-2); padding-top: 10px; }
 
+/* Modulo che prepara il messaggio WhatsApp (non invia nulla al sito) */
+.ordina { margin-top: 12px; }
+.ordina summary {
+  list-style: none; display: inline-flex; align-items: center; cursor: pointer;
+  font-weight: 600; font-size: 15px; color: var(--ink);
+  border: 1.5px solid var(--ink); border-radius: 999px; padding: 8px 16px;
+  transition: background .15s ease, color .15s ease;
+}
+.ordina summary::-webkit-details-marker { display: none; }
+.ordina summary:hover, .ordina[open] summary { background: var(--ink); color: var(--bianco); }
+.ordina form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.ordina label { display: grid; gap: 4px; font-size: 14px; font-weight: 600; color: var(--ink); min-width: 0; }
+.ordina .largo { grid-column: 1 / -1; }
+.ordina input, .ordina textarea {
+  font: 400 16px/1.4 var(--f-body); color: var(--ink);
+  background: var(--latte); border: 1.5px solid var(--linea); border-radius: 12px;
+  padding: 10px 12px; width: 100%; min-width: 0; min-height: 46px; -webkit-appearance: none; appearance: none;
+}
+.ordina input::placeholder, .ordina textarea::placeholder { color: var(--ink-2); opacity: .7; }
+.ordina input:focus, .ordina textarea:focus { border-color: var(--blu); }
+.ordina textarea { resize: vertical; }
+.ordina .avviso { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.ordina .avviso.errore { color: var(--ink); font-weight: 600; }
+.ordina .btn { justify-self: start; }
+
 /* ---------- Dove siamo ---------- */
 .dove .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
 .dove h2 { margin-bottom: 24px; }
@@ -268,11 +293,12 @@ footer .legal { margin-top: 52px; padding-top: 20px; border-top: 1px solid rgba(
   .voce .nome { font-size: 15.5px; }
   footer .grid { grid-template-columns: 1fr; }
   .cartellino { right: -4px; }
+  .ordina form { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .nastro-track { animation: none; }
-  .btn, .burger span, .burger span::before, .burger span::after { transition: none; }
+  .btn, .burger span, .burger span::before, .burger span::after, .ordina summary { transition: none; }
 }
 
 /* ---------- Base (prima fornita dall'anteprima) ---------- */

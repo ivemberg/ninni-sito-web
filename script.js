@@ -35,3 +35,29 @@
   burger.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
   nav.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+  // ------- Ordine torta su WhatsApp (il messaggio lo invia il cliente) -------
+  const ordina = document.getElementById("ordina"), avviso = document.getElementById("ordina-avviso");
+  const dataRitiro = ordina.elements.data, testoAvviso = avviso.textContent;
+  const giornoRoma = d => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(d);
+  dataRitiro.min = giornoRoma(new Date(Date.now() + 2 * 864e5));   // almeno 2 giorni prima
+  const errore = msg => { avviso.textContent = msg; avviso.classList.add("errore"); };
+  const ripristina = () => { avviso.textContent = testoAvviso; avviso.classList.remove("errore"); };
+  ordina.addEventListener("input", ripristina);
+  ordina.addEventListener("submit", e => {
+    e.preventDefault();
+    const f = ordina.elements, giorno = new Date(f.data.value + "T12:00");
+    if (!f.nome.value.trim() || !f.data.value || !f.persone.value) return errore("Inserisci nome, data di ritiro e numero di persone.");
+    if (f.data.value < dataRitiro.min) return errore("Le torte si ordinano almeno 2 giorni prima.");
+    if (!ORARI[giorno.getDay()].length) return errore("Il " + GIORNI[giorno.getDay()] + " siamo chiusi: scegli un altro giorno.");
+    const righe = [
+      "Ciao Ninnì! Vorrei ordinare una torta.",
+      "Nome: " + f.nome.value.trim(),
+      "Ritiro: " + giorno.toLocaleDateString("it-IT", { weekday: "long", day: "numeric", month: "long" }),
+      "Persone: " + f.persone.value,
+    ];
+    if (f.gusto.value.trim()) righe.push("Gusto: " + f.gusto.value.trim());
+    if (f.note.value.trim()) righe.push("Scritta o decorazione: " + f.note.value.trim());
+    ripristina();
+    window.open("https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n")), "_blank", "noopener");
+  });
