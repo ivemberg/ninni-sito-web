@@ -235,12 +235,12 @@
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4 H9 L10.5 8.5 L8.2 10 C9.2 12.2 11.8 14.8 14 15.8 L15.5 13.5 L20 15 V19 C20 19.6 19.6 20 19 20 C10.7 20 4 13.3 4 5 C4 4.4 4.4 4 5 4 Z"/></svg></span>
           <div><b>Al telefono</b><span>Chiamaci al <a href="tel:+393534024974">353 402 4974</a> negli orari di apertura.</span></div>
         </div>
-        <div class="modo">
+        <div class="modo" id="ordina">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L5.3 16.2 C4.5 14.9 4 13.5 4 12 C4 7.6 7.6 4 12 4 C16.4 4 20 7.6 20 12 C20 16.4 16.4 20 12 20 C10.5 20 9.1 19.6 7.8 18.8 Z"/></svg></span>
           <div><b>Su WhatsApp</b><span>Scrivici al <a href="https://wa.me/393534024974" target="_blank" rel="noopener">353 402 4974</a> con data, persone e gusto.</span>
             <details class="ordina">
               <summary>Prepara il messaggio</summary>
-              <form id="ordina" novalidate>
+              <form id="ordina-form" novalidate>
                 <label>Nome<input name="nome" autocomplete="given-name" required></label>
                 <label>Ritiro il<input name="data" type="date" required></label>
                 <label>Persone<input name="persone" type="number" min="1" max="200" inputmode="numeric" required></label>

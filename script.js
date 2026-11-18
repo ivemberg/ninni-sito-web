@@ -37,7 +37,7 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
 
   // ------- Ordine torta su WhatsApp (il messaggio lo invia il cliente) -------
-  const ordina = document.getElementById("ordina"), avviso = document.getElementById("ordina-avviso");
+  const ordina = document.getElementById("ordina-form"), avviso = document.getElementById("ordina-avviso");
   const dataRitiro = ordina.elements.data, testoAvviso = avviso.textContent;
   const giornoRoma = d => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(d);
   dataRitiro.min = giornoRoma(new Date(Date.now() + 2 * 864e5));   // almeno 2 giorni prima
@@ -61,3 +61,10 @@
     ripristina();
     window.open("https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n")), "_blank", "noopener");
   });
+  // Link diretto al modulo (es. dal QR in negozio): .../#ordina apre la tendina
+  const apriDaLink = () => {
+    if (location.hash !== "#ordina") return;
+    ordina.closest("details").open = true;
+    document.getElementById("ordina").scrollIntoView({ block: "start" });
+  };
+  apriDaLink(); addEventListener("hashchange", apriDaLink);
