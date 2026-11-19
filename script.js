@@ -59,7 +59,8 @@
     if (f.gusto.value.trim()) righe.push("Gusto: " + f.gusto.value.trim());
     if (f.note.value.trim()) righe.push("Scritta o decorazione: " + f.note.value.trim());
     ripristina();
-    window.open("https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n")), "_blank", "noopener");
+    // Stessa scheda, non popup: i browser interni di Instagram/Facebook e delle app QR bloccano window.open
+    location.href = "https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n"));
   });
   // Link diretto al modulo (es. dal QR in negozio): .../#ordina apre la tendina
   const apriDaLink = () => {
