@@ -62,10 +62,47 @@
     // Stessa scheda, non popup: i browser interni di Instagram/Facebook e delle app QR bloccano window.open
     location.href = "https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n"));
   });
-  // Link diretto al modulo (es. dal QR in negozio): .../#ordina apre la tendina
+  // ------- Prenotazione panettoni su WhatsApp (voci e prezzi letti dal menu) -------
+  const pan = document.getElementById("panettoni-form"), panAvviso = document.getElementById("panettoni-avviso");
+  const panTesto = panAvviso.textContent, panTotale = document.getElementById("panettoni-totale");
+  const euro = n => n.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  const voci = [...document.querySelectorAll(".gruppo.feste .voce")].map(li => ({
+    nome: li.querySelector(".nome").textContent,
+    prezzo: parseFloat(li.querySelector(".pill").textContent.replace(",", ".")),
+  }));
+  document.getElementById("panettoni-qta").innerHTML = voci.map((v, i) =>
+    `<label><span>${v.nome} <small>${euro(v.prezzo)}</small></span><input name="q${i}" type="number" min="0" max="20" inputmode="numeric" placeholder="0" aria-label="Quanti: ${v.nome}"></label>`).join("");
+  const quanti = () => voci.map((v, i) => ({ ...v, n: Math.max(0, Math.floor(+pan.elements["q" + i].value || 0)) })).filter(v => v.n);
+  const domani = giornoRoma(new Date(Date.now() + 864e5));
+  pan.elements.data.min = domani > "2026-12-01" ? domani : "2026-12-01";   // in vendita dal 1° dicembre
+  const panErrore = msg => { panAvviso.textContent = msg; panAvviso.classList.add("errore"); };
+  pan.addEventListener("input", () => {
+    panAvviso.textContent = panTesto; panAvviso.classList.remove("errore");
+    panTotale.textContent = "Totale: " + euro(quanti().reduce((s, v) => s + v.n * v.prezzo, 0));
+  });
+  pan.addEventListener("submit", e => {
+    e.preventDefault();
+    const f = pan.elements, scelti = quanti(), giorno = new Date(f.data.value + "T12:00");
+    if (!scelti.length) return panErrore("Scegli almeno un panettone o una veneziana.");
+    if (!f.nome.value.trim() || !f.data.value) return panErrore("Inserisci nome e data di ritiro.");
+    if (f.data.value < f.data.min) return panErrore(f.data.min === "2026-12-01" ? "Panettoni e veneziane sono in vendita dal 1° dicembre." : "Scegli una data da domani in poi.");
+    if (!ORARI[giorno.getDay()].length) return panErrore("Il " + GIORNI[giorno.getDay()] + " siamo chiusi: scegli un altro giorno.");
+    const righe = [
+      "Ciao Ninnì! Vorrei prenotare:",
+      ...scelti.map(v => v.n + " × " + v.nome),
+      "Totale: " + euro(scelti.reduce((s, v) => s + v.n * v.prezzo, 0)),
+      "Nome: " + f.nome.value.trim(),
+      "Ritiro: " + giorno.toLocaleDateString("it-IT", { weekday: "long", day: "numeric", month: "long" }),
+    ];
+    location.href = "https://wa.me/393534024974?text=" + encodeURIComponent(righe.join("\n"));
+  });
+
+  // Link diretto ai moduli (es. dal QR in negozio): .../#ordina o .../#panettoni apre la tendina
   const apriDaLink = () => {
-    if (location.hash !== "#ordina") return;
-    ordina.closest("details").open = true;
-    document.getElementById("ordina").scrollIntoView({ block: "start" });
+    const id = { "#ordina": "ordina", "#panettoni": "panettoni" }[location.hash];
+    if (!id) return;
+    const blocco = document.getElementById(id);
+    (blocco.matches("details") ? blocco : blocco.querySelector("details")).open = true;
+    blocco.scrollIntoView({ block: "start" });
   };
   apriDaLink(); addEventListener("hashchange", apriDaLink);

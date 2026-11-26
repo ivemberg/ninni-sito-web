@@ -195,6 +195,18 @@
             <li class="voce"><span class="nome">Veneziana senza canditi</span><span class="punti" aria-hidden="true"></span><span class="prezzi"><span class="pill">28,75 €</span></span></li>
           </ul>
           <p class="sotto">In vendita dal 1° dicembre.</p>
+          <details class="ordina" id="panettoni">
+            <summary>Prenota su WhatsApp</summary>
+            <form id="panettoni-form" novalidate>
+              <!-- le righe con le quantità le crea script.js dalle voci qui sopra -->
+              <div class="qta-lista largo" id="panettoni-qta"></div>
+              <p class="totale largo" id="panettoni-totale">Totale: 0,00 €</p>
+              <label>Nome<input name="nome" autocomplete="given-name" required></label>
+              <label>Ritiro il<input name="data" type="date" required></label>
+              <p class="avviso largo" id="panettoni-avviso" aria-live="polite">Si apre WhatsApp con il messaggio pronto: lo invii tu. Il sito non salva nulla.</p>
+              <button class="btn largo" type="submit">Apri WhatsApp</button>
+            </form>
+          </details>
         </div>
         <div class="gruppo">
           <h3>Dolci</h3>
