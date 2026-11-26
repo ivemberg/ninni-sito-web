@@ -113,7 +113,7 @@ p { margin: 0; }
 
 /* ---------- Nastro ---------- */
 .nastro { background: var(--blu); color: var(--crema); overflow: hidden; padding-block: 13px; }
-.nastro-track { display: flex; width: max-content; animation: scorri 44s linear infinite; }
+.nastro-track { display: flex; width: max-content; animation: scorri 59s linear infinite; }
 .nastro-track span { font-family: var(--f-label); font-size: 16px; letter-spacing: .12em; white-space: nowrap; padding-inline: 22px; }
 .nastro-track span::after { content: "✿"; color: var(--rosa); margin-left: 44px; }
 @keyframes scorri { to { transform: translateX(-50%); } }
