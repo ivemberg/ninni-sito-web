@@ -163,6 +163,10 @@ footer a, .modo a, .indirizzo a { text-underline-offset: 3px; }
 .voce.doppio .prezzi { gap: 5px; }
 .voce.doppio .pill { padding-inline: 10px; font-size: 16.5px; }
 .gruppo .sotto { font-size: 14px; color: var(--ink-2); margin-top: 10px; }
+/* Panettoni e veneziane (stagionale): riga intera in cima, voci su due colonne */
+.gruppo.feste { grid-column: 1 / -1; padding-bottom: 36px; border-bottom: 2px dotted rgba(88,146,179,.55); }
+.gruppo.feste h3 .label { color: var(--ink-2); font-size: 16px; font-weight: 400; margin-left: 6px; white-space: nowrap; }
+.gruppo.feste ul { grid-template-columns: 1fr 1fr; column-gap: clamp(32px, 5vw, 72px); }
 .nota-prezzi { margin-top: 24px; font-size: 14px; color: var(--crema); }
 
 /* ---------- Laboratorio ---------- */
@@ -281,7 +285,7 @@ footer .legal { margin-top: 52px; padding-top: 20px; border-top: 1px solid rgba(
   .hero .wrap, .storia .wrap, .torte .wrap, .dove .wrap { grid-template-columns: 1fr; }
   .hero-vis { justify-self: center; max-width: 340px; }
   .storia .arco { max-width: 320px; }
-  .listino { grid-template-columns: 1fr; }
+  .listino, .gruppo.feste ul { grid-template-columns: 1fr; }
   .storia .lab { grid-template-columns: 1fr 1fr; }
   .lab .didascalia { grid-column: 1 / -1; }
   .pilastri { grid-template-columns: 1fr; gap: 16px; }
